@@ -22,3 +22,6 @@ pyjwt = "^2.10.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+server = "api.main:create_app"
