@@ -19,6 +19,9 @@ asyncpg = "^0.30.0"
 pyjwt = "^2.10.0"
 isort = "^5.13.2"
 blue = "^0.9.1"
+unidecode = "^1.3.8"
+pytest = "^8.3.3"
+colorama = "^0.4.6"
 
 
 [build-system]
@@ -28,3 +31,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 server = "scripts.server:run"
 formatter = "scripts.formatter:run"
+tests = "scripts.tests:run_tests"
