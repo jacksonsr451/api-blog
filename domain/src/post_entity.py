@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 from uuid import uuid4
+
 from unidecode import unidecode
 
 from .author_entity import AuthorEntity
@@ -19,13 +20,10 @@ class PostEntity:
     def __init__(
         self,
         id: Optional[str] = None,
-        title: str = "",
+        title: str = '',
         status: bool = False,
         thumbnail: Optional[str] = None,
     ):
-        if not title:
-            raise ValueError('Title is required.')
-
         self._id = id if id else str(uuid4())
         self._title = title
         self._description = None
@@ -37,7 +35,6 @@ class PostEntity:
 
     def set_post_data(
         self,
-        id: str,
         title: str,
         description: str,
         body: str,
@@ -45,11 +42,10 @@ class PostEntity:
         author: AuthorEntity,
         status: bool,
         thumbnail: str,
-    ) -> "PostEntity":
+    ) -> 'PostEntity':
         if not title or not description or not body:
             raise ValueError('Title, description, and body are required.')
 
-        self._id = id
         self._title = title
         self._description = description
         self._body = body
@@ -59,7 +55,7 @@ class PostEntity:
         self._thumbnail = thumbnail
         return self
 
-    def create_a_new_post(self, description: str, body: str) -> "PostEntity":
+    def create_a_new_post(self, description: str, body: str) -> 'PostEntity':
         if not description:
             raise ValueError('Description is required.')
         if not body:
@@ -70,7 +66,7 @@ class PostEntity:
         self._slug = self.__generate_slug(self._title)
         return self
 
-    def publish(self) -> "PostEntity":
+    def publish(self) -> 'PostEntity':
         if not self._description or not self._body:
             raise ValueError(
                 'Post must have a description and body before being published.'
@@ -109,16 +105,16 @@ class PostEntity:
     @property
     def thumbnail(self) -> Optional[str]:
         return self._thumbnail
-    
+
     @thumbnail.setter
-    def thumbnail(self, thumbnail) -> "PostEntity":
+    def thumbnail(self, thumbnail) -> 'PostEntity':
         self._thumbnail = thumbnail
         return self
 
     def __generate_slug(self, title: str) -> str:
         slug = unidecode(title)
-        slug = re.sub(r"[^\w\s-]", "", slug)
-        slug = re.sub(r"[\s-]+", "-", slug).strip("-")
+        slug = re.sub(r'[^\w\s-]', '', slug)
+        slug = re.sub(r'[\s-]+', '-', slug).strip('-')
         return slug.lower()
 
     def __repr__(self) -> str:
