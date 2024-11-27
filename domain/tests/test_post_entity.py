@@ -33,7 +33,6 @@ def test_create_post_entity_without_title_raises_error():
 def test_set_post_data(author_entity):
     post = PostEntity(title="Initial Title")
     post.set_post_data(
-        id=str(uuid4()),
         title="Updated Title",
         description="Updated Description",
         body="Updated Body",

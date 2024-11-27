@@ -37,7 +37,6 @@ class PostEntity:
 
     def set_post_data(
         self,
-        id: str,
         title: str,
         description: str,
         body: str,
@@ -49,7 +48,6 @@ class PostEntity:
         if not title or not description or not body:
             raise ValueError('Title, description, and body are required.')
 
-        self._id = id
         self._title = title
         self._description = description
         self._body = body
