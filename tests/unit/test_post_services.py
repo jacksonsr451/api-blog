@@ -62,7 +62,9 @@ def post_data(mock_values):
 
 
 @pytest.mark.asyncio
-async def test_execute_create(mock_repository: PostRepository, post_data: PostDTO):
+async def test_execute_create(
+    mock_repository: PostRepository, post_data: PostDTO
+):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
 
@@ -75,7 +77,9 @@ async def test_execute_create(mock_repository: PostRepository, post_data: PostDT
 
 
 @pytest.mark.asyncio
-async def test_execute_update(mock_repository: PostRepository, post_data: PostDTO):
+async def test_execute_update(
+    mock_repository: PostRepository, post_data: PostDTO
+):
     service = PostServices(mock_repository)
     post_data.title = 'Updated Title'
 
@@ -89,7 +93,9 @@ async def test_execute_update(mock_repository: PostRepository, post_data: PostDT
 
 
 @pytest.mark.asyncio
-async def test_execute_delete(mock_repository: PostRepository, post_data: PostDTO):
+async def test_execute_delete(
+    mock_repository: PostRepository, post_data: PostDTO
+):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
     service.delete_a_post(post_data.id)
@@ -100,7 +106,9 @@ async def test_execute_delete(mock_repository: PostRepository, post_data: PostDT
 
 
 @pytest.mark.asyncio
-async def test_execute_view(mock_repository: PostRepository, post_data: PostDTO):
+async def test_execute_view(
+    mock_repository: PostRepository, post_data: PostDTO
+):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
 
@@ -113,7 +121,9 @@ async def test_execute_view(mock_repository: PostRepository, post_data: PostDTO)
 
 
 @pytest.mark.asyncio
-async def test_list_all_posts(mock_repository: PostRepository, post_data: PostDTO):
+async def test_list_all_posts(
+    mock_repository: PostRepository, post_data: PostDTO
+):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
     service.list_all_posts()

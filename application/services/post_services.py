@@ -69,7 +69,9 @@ class PostServices:
         self._action = 'list'
         return self
 
-    async def execute(self) -> Optional[PostDTO] | Optional[list[PostDTO]] | None:
+    async def execute(
+        self,
+    ) -> Optional[PostDTO] | Optional[list[PostDTO]] | None:
         if not self._action:
             raise ValueError('No action specified.')
 
@@ -81,7 +83,9 @@ class PostServices:
                 return self._post_model
 
             case 'update':
-                await self._repository.update(self._post_entity.id, self._post_model)
+                await self._repository.update(
+                    self._post_entity.id, self._post_model
+                )
                 return self._post_model
 
             case 'delete':
