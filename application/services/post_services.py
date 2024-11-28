@@ -69,7 +69,7 @@ class PostServices:
         self._action = 'list'
         return self
 
-    def execute(self) -> Optional[PostDTO] | Optional[list[PostDTO]] | None:
+    async def execute(self) -> Optional[PostDTO] | Optional[list[PostDTO]] | None:
         if not self._action:
             raise ValueError('No action specified.')
 
@@ -77,23 +77,23 @@ class PostServices:
 
         match self._action:
             case 'create':
-                self._repository.create(self._post_model)
+                await self._repository.create(self._post_model)
                 return self._post_model
 
             case 'update':
-                self._repository.update(self._post_entity.id, self._post_model)
+                await self._repository.update(self._post_entity.id, self._post_model)
                 return self._post_model
 
             case 'delete':
-                self._repository.delete(self._post_entity.id)
+                await self._repository.delete(self._post_entity.id)
                 return None
 
             case 'view':
-                model = self._repository.view(self._post_entity.id)
+                model = await self._repository.view(self._post_entity.id)
                 return self.convert_model_to_dto(model) if model else None
 
             case 'list':
-                models = self._repository.list()
+                models = await self._repository.list()
                 return [self.convert_model_to_dto(model) for model in models]
 
             case _:

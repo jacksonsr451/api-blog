@@ -11,26 +11,26 @@ class BaseRepositoryInterface(ABC):
         super().__init__(session, *args, **kargs)
 
     @abstractmethod
-    def create(self, data: DatabaseModel) -> None:
+    async def create(self, data: DatabaseModel) -> None:
         """Create a new entry."""
         pass
 
     @abstractmethod
-    def view(self, id: str) -> Optional[DatabaseModel]:
+    async def view(self, id: str) -> Optional[DatabaseModel]:
         """View an entry by its ID."""
         pass
 
     @abstractmethod
-    def list(self) -> List[DatabaseModel]:
+    async def list(self) -> List[DatabaseModel]:
         """List all entries."""
         pass
 
     @abstractmethod
-    def update(self, id: str, data: DatabaseModel) -> None:
+    async def update(self, id: str, data: DatabaseModel) -> None:
         """Update an entry by its ID."""
         pass
 
     @abstractmethod
-    def delete(self, id: str) -> None:
+    async def delete(self, id: str) -> None:
         """Delete an entry by its ID."""
         pass

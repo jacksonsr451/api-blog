@@ -10,18 +10,19 @@ from infrastructure.models.post_model import PostModel
 class PostRepository(BaseRepositoryInterface):
     def __init__(self, session: AsyncSession, *args, **kargs):
         super().__init__(session, *args, **kargs)
+        self.session = session
 
-    def create(self, data) -> None:
+    async def create(self, data) -> None:
         return super().create(data)
 
-    def update(self, id, data) -> None:
+    async def update(self, id, data) -> None:
         return super().update(id, data)
 
-    def view(self, id) -> PostModel:
+    async def view(self, id) -> PostModel:
         return super().view(id)
 
-    def list(self) -> List[PostModel | None]:
+    async def list(self) -> List[PostModel | None]:
         return super().list()
 
-    def delete(self, id) -> None:
+    async def delete(self, id) -> None:
         return super().delete(id)

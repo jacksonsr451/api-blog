@@ -61,11 +61,12 @@ def post_data(mock_values):
     return PostDTO(**mock_values)
 
 
-def test_execute_create(mock_repository: PostRepository, post_data: PostDTO):
+@pytest.mark.asyncio
+async def test_execute_create(mock_repository: PostRepository, post_data: PostDTO):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
 
-    result = service.execute()
+    result = await service.execute()
     result_dto = service.convert_dto_to_model(result)
 
     assert result.title == post_data.title
@@ -73,47 +74,51 @@ def test_execute_create(mock_repository: PostRepository, post_data: PostDTO):
     mock_repository.create.assert_called_once_with(result_dto)
 
 
-def test_execute_update(mock_repository: PostRepository, post_data: PostDTO):
+@pytest.mark.asyncio
+async def test_execute_update(mock_repository: PostRepository, post_data: PostDTO):
     service = PostServices(mock_repository)
     post_data.title = 'Updated Title'
 
     service.update_a_post(post_data.id)
     service.set_post_data(post_data)
     post_model = service.convert_dto_to_model(post_data)
-    result = service.execute()
+    result = await service.execute()
 
     assert result.title == 'Updated Title'
     mock_repository.update.assert_called_once_with(post_data.id, post_model)
 
 
-def test_execute_delete(mock_repository: PostRepository, post_data: PostDTO):
+@pytest.mark.asyncio
+async def test_execute_delete(mock_repository: PostRepository, post_data: PostDTO):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
     service.delete_a_post(post_data.id)
 
-    result = service.execute()
+    result = await service.execute()
     assert result is None
     mock_repository.delete.assert_called_once_with(post_data.id)
 
 
-def test_execute_view(mock_repository: PostRepository, post_data: PostDTO):
+@pytest.mark.asyncio
+async def test_execute_view(mock_repository: PostRepository, post_data: PostDTO):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
 
     service.view_a_post(post_data.id)
-    result = service.execute()
+    result = await service.execute()
 
     assert result is not None
     assert result.id == post_data.id
     mock_repository.view.assert_called_once_with(result.id)
 
 
-def test_list_all_posts(mock_repository: PostRepository, post_data: PostDTO):
+@pytest.mark.asyncio
+async def test_list_all_posts(mock_repository: PostRepository, post_data: PostDTO):
     service = PostServices(mock_repository)
     service.create_a_new_post(post_data)
     service.list_all_posts()
 
-    result = service.execute()
+    result = await service.execute()
 
     assert isinstance(result, list)
     mock_repository.list.assert_called_once()
