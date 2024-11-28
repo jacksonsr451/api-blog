@@ -1,24 +1,27 @@
+from typing import List
+
 from application.interfaces.base_repository_interface import (
     BaseRepositoryInterface,
 )
+from sqlalchemy.ext.asyncio import AsyncSession
 from infrastructure.models.post_model import PostModel
 
 
 class PostRepository(BaseRepositoryInterface):
-    def __init__(self, model: PostModel, *args, **kargs):
-        super().__init__(model, *args, **kargs)
+    def __init__(self, session: AsyncSession, *args, **kargs):
+        super().__init__(session, *args, **kargs)
 
-    def create(self, data):
+    def create(self, data) -> None:
         return super().create(data)
 
-    def update(self, id, data):
+    def update(self, id, data) -> None:
         return super().update(id, data)
 
-    def view(self, id):
+    def view(self, id) -> PostModel:
         return super().view(id)
 
-    def list(self):
+    def list(self) -> List[PostModel | None]:
         return super().list()
 
-    def delete(self, id):
+    def delete(self, id) -> None:
         return super().delete(id)

@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from pydantic import BaseModel
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from .database_model import DatabaseModel
 
 
 class BaseRepositoryInterface(ABC):
-    def __init__(self, model: DatabaseModel, *args, **kargs):
-        super().__init__(model, *args, **kargs)
+    def __init__(self, session: AsyncSession, *args, **kargs):
+        super().__init__(session, *args, **kargs)
 
     @abstractmethod
     def create(self, data: DatabaseModel) -> None:
