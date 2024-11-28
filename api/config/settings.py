@@ -25,6 +25,7 @@ class Settings:
     KEYCLOAK_JWK_URI: str = config(
         'KEYCLOAK_JWK_URI', default='keycloak-jwk', cast=str
     )
+    POSTGRES_URL: str = config('POSTGRES_URL', default='sqlite:///./test.db', cast=str)
 
     UNPROTECTED_ROUTES = [
         '/docs',
