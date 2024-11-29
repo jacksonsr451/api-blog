@@ -1,5 +1,5 @@
 from typing import List
-
+from sqlalchemy.future import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import asc
@@ -9,16 +9,22 @@ from application.interfaces.base_repository_interface import (
     BaseRepositoryInterface,
 )
 from infrastructure.models.post_model import PostModel
+from infrastructure.models.author_model import AuthorModel
 
 
 class PostRepository(BaseRepositoryInterface):
     def __init__(self, session: AsyncSession, *args, **kargs):
         super().__init__(session, *args, **kargs)
-        self._session = session
 
     async def create(self, data: PostDTO) -> None:
-        instance = PostModel(**data.model_dump())
+        author_instance = AuthorModel(**data.author.model_dump())
+
+        post_data = data.model_dump()
+        post_data.pop('author', None)
+
+        instance = PostModel(**post_data, author=author_instance)
         self._session.add(instance)
+
         try:
             await self._session.commit()
             await self._session.refresh(instance)
@@ -32,8 +38,10 @@ class PostRepository(BaseRepositoryInterface):
         if not instance:
             raise ValueError(f'Post com ID {id} não encontrado.')
 
+        valid_keys = {column.name for column in PostModel.__table__.columns}
         for key, value in data.model_dump().items():
-            setattr(instance, key, value)
+            if key in valid_keys:
+                setattr(instance, key, value)
 
         try:
             await self._session.commit()
@@ -53,12 +61,8 @@ class PostRepository(BaseRepositoryInterface):
     async def list(
         self, order_by: str = 'created_at'
     ) -> List[PostModel | None]:
-        query = self._session.query(PostModel)
+        result = await self._session.execute(select(PostModel))
 
-        if order_by:
-            query = query.order_by(asc(order_by))
-
-        result = await self._session.execute(query)
         return result.scalars().all()
 
     async def delete(self, id) -> None:

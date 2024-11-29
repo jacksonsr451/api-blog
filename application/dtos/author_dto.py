@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class AuthorDTO(BaseModel):
-    id: Optional[UUID] = None
+    id: Optional[str] = None
     firstname: str
     lastname: str
     description: Optional[str] = None

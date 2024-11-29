@@ -8,7 +8,7 @@ from .database_model import DatabaseModel
 
 class BaseRepositoryInterface(ABC):
     def __init__(self, session: AsyncSession, *args, **kargs):
-        super().__init__(session, *args, **kargs)
+        self._session = session
 
     @abstractmethod
     async def create(self, data: DatabaseModel) -> None:

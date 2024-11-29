@@ -1,18 +1,17 @@
 from typing import Optional
-from uuid import UUID
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 
 from .author_dto import AuthorDTO
 
 
 class PostDTO(BaseModel):
-    id: Optional[UUID] = None
+    id: Optional[str] = None
     title: str
     description: Optional[str] = None
     body: Optional[str] = None
     slug: Optional[str] = None
     author: Optional[AuthorDTO] = None
-    author_id: Optional[UUID] = None
+    author_id: Optional[str] = None
     status: Optional[bool] = False
-    thumbnail: Optional[HttpUrl] = None
+    thumbnail: Optional[str] = None
