@@ -53,7 +53,7 @@ async def test_create_post(
         await conn.run_sync(AuthorModel.metadata.create_all)
 
     async for session in test_session:
-        post_repo = PostRepository(session)
+        post_repo = PostRepository(session, PostModel)
         await post_repo.create(data_post)
 
         post = await post_repo.view(data_post.id)
@@ -74,7 +74,7 @@ async def test_view_post(
         await conn.run_sync(AuthorModel.metadata.create_all)
 
     async for session in test_session:
-        post_repo = PostRepository(session)
+        post_repo = PostRepository(session, PostModel)
         await post_repo.create(data_post)
 
         post = await post_repo.view(data_post.id)
@@ -95,7 +95,7 @@ async def test_update_post(
         await conn.run_sync(AuthorModel.metadata.create_all)
 
     async for session in test_session:
-        post_repo = PostRepository(session)
+        post_repo = PostRepository(session, PostModel)
         await post_repo.create(data_post)
         updated_data = data_post
         updated_data.title = 'Updated Post'
@@ -120,7 +120,7 @@ async def test_list_posts(
         await conn.run_sync(AuthorModel.metadata.create_all)
 
     async for session in test_session:
-        post_repo = PostRepository(session)
+        post_repo = PostRepository(session, PostModel)
         await post_repo.create(data_post)
 
         posts = await post_repo.list()
@@ -141,7 +141,7 @@ async def test_delete_post(
         await conn.run_sync(AuthorModel.metadata.create_all)
 
     async for session in test_session:
-        post_repo = PostRepository(session)
+        post_repo = PostRepository(session, PostModel)
         await post_repo.create(data_post)
 
         await post_repo.delete(data_post.id)
