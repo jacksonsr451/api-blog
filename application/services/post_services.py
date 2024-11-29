@@ -1,5 +1,4 @@
 from typing import Optional
-from uuid import UUID, uuid4
 
 from application.dtos.author_dto import AuthorDTO
 from application.dtos.post_dto import PostDTO
