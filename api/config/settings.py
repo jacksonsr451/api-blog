@@ -2,6 +2,8 @@ from decouple import config
 
 from .logger_config import configure_logging
 
+from .container import container
+
 
 class Settings:
     SERVER_HOST: str = config('SERVER_HOST', default='127.0.0.1', cast=str)
@@ -38,6 +40,8 @@ class Settings:
         '/api/v1/auth/logout',
         '/api/v1/auth/register',
     ]
+
+    CONTAINER = container
 
     def is_dev(self) -> bool:
         return self.APP_ENV == 'development'
