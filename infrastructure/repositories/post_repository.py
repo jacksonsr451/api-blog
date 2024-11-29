@@ -1,15 +1,16 @@
 from typing import List
-from sqlalchemy.future import select
+
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 from sqlmodel import asc
 
 from application.dtos.post_dto import PostDTO
 from application.interfaces.base_repository_interface import (
     BaseRepositoryInterface,
 )
-from infrastructure.models.post_model import PostModel
 from infrastructure.models.author_model import AuthorModel
+from infrastructure.models.post_model import PostModel
 
 
 class PostRepository(BaseRepositoryInterface):

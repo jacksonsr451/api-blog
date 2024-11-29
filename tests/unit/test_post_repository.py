@@ -1,11 +1,13 @@
 from uuid import uuid4
+
 import pytest
-from sqlalchemy.ext.asyncio import AsyncSession, AsyncEngine
-from application.dtos.post_dto import PostDTO
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+
 from application.dtos.author_dto import AuthorDTO
-from infrastructure.repositories.post_repository import PostRepository
-from infrastructure.models.post_model import PostModel
+from application.dtos.post_dto import PostDTO
 from infrastructure.models.author_model import AuthorModel
+from infrastructure.models.post_model import PostModel
+from infrastructure.repositories.post_repository import PostRepository
 
 
 @pytest.fixture
@@ -18,16 +20,15 @@ def data_post() -> PostDTO:
         resume='Author resume',
     )
     return PostDTO(
-            id=str(uuid4()),
-            title='Test Post',
-            description='A post for testing',
-            body='This is the body of the post',
-            slug='test-post',
-            author=author_dto,
-            status=True,
-            thumbnail='http://example.com/thumbnail.jpg',
-        )
-
+        id=str(uuid4()),
+        title='Test Post',
+        description='A post for testing',
+        body='This is the body of the post',
+        slug='test-post',
+        author=author_dto,
+        status=True,
+        thumbnail='http://example.com/thumbnail.jpg',
+    )
 
 
 @pytest.fixture
@@ -44,7 +45,9 @@ async def setup_database(test_engine: AsyncEngine):
 
 
 @pytest.mark.asyncio
-async def test_create_post(test_engine, test_session: AsyncSession, data_post: PostDTO):
+async def test_create_post(
+    test_engine, test_session: AsyncSession, data_post: PostDTO
+):
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.create_all)
         await conn.run_sync(AuthorModel.metadata.create_all)
@@ -56,14 +59,16 @@ async def test_create_post(test_engine, test_session: AsyncSession, data_post: P
         post = await post_repo.view(data_post.id)
         assert post.title == data_post.title
         assert post.body == data_post.body
-    
+
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.drop_all)
         await conn.run_sync(AuthorModel.metadata.drop_all)
 
 
 @pytest.mark.asyncio
-async def test_view_post(test_engine, test_session: AsyncSession, data_post: PostDTO):
+async def test_view_post(
+    test_engine, test_session: AsyncSession, data_post: PostDTO
+):
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.create_all)
         await conn.run_sync(AuthorModel.metadata.create_all)
@@ -75,13 +80,16 @@ async def test_view_post(test_engine, test_session: AsyncSession, data_post: Pos
         post = await post_repo.view(data_post.id)
         assert post.title == data_post.title
         assert post.body == data_post.body
-    
+
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.drop_all)
         await conn.run_sync(AuthorModel.metadata.drop_all)
 
+
 @pytest.mark.asyncio
-async def test_update_post(test_engine, test_session: AsyncSession, data_post: PostDTO):
+async def test_update_post(
+    test_engine, test_session: AsyncSession, data_post: PostDTO
+):
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.create_all)
         await conn.run_sync(AuthorModel.metadata.create_all)
@@ -90,20 +98,23 @@ async def test_update_post(test_engine, test_session: AsyncSession, data_post: P
         post_repo = PostRepository(session)
         await post_repo.create(data_post)
         updated_data = data_post
-        updated_data.title = "Updated Post"
-        updated_data.body = "Updated content"
+        updated_data.title = 'Updated Post'
+        updated_data.body = 'Updated content'
 
         await post_repo.update(data_post.id, updated_data)
         post = await post_repo.view(data_post.id)
 
-        assert post.title == "Updated Post"
-        assert post.body == "Updated content"
+        assert post.title == 'Updated Post'
+        assert post.body == 'Updated content'
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.drop_all)
         await conn.run_sync(AuthorModel.metadata.drop_all)
 
+
 @pytest.mark.asyncio
-async def test_list_posts(test_engine, test_session: AsyncSession, data_post: PostDTO):
+async def test_list_posts(
+    test_engine, test_session: AsyncSession, data_post: PostDTO
+):
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.create_all)
         await conn.run_sync(AuthorModel.metadata.create_all)
@@ -120,8 +131,11 @@ async def test_list_posts(test_engine, test_session: AsyncSession, data_post: Po
         await conn.run_sync(PostModel.metadata.drop_all)
         await conn.run_sync(AuthorModel.metadata.drop_all)
 
+
 @pytest.mark.asyncio
-async def test_delete_post(test_engine, test_session: AsyncSession, data_post: PostDTO):
+async def test_delete_post(
+    test_engine, test_session: AsyncSession, data_post: PostDTO
+):
     async with test_engine.begin() as conn:
         await conn.run_sync(PostModel.metadata.create_all)
         await conn.run_sync(AuthorModel.metadata.create_all)
@@ -129,7 +143,6 @@ async def test_delete_post(test_engine, test_session: AsyncSession, data_post: P
     async for session in test_session:
         post_repo = PostRepository(session)
         await post_repo.create(data_post)
-
 
         await post_repo.delete(data_post.id)
 
