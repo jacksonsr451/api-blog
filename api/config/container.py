@@ -1,5 +1,6 @@
 import inspect
 from typing import Any, Callable, Dict, Type, TypeVar
+from fastapi import Request
 
 T = TypeVar('T')
 
@@ -11,23 +12,21 @@ class DependencyContainer:
         self._registrations[abstraction] = implementation
 
     def resolve(self, abstraction: Type[T]) -> T:
-        if abstraction not in self._registrations:
-            raise ValueError(f'Nenhuma implementação registrada para {abstraction}')
-        return self._registrations[abstraction]()
+        if abstraction in self._registrations:
+            return self._registrations[abstraction]()
+        return None
 
     def resolve_all(self, obj: Any) -> None:
         if inspect.isclass(obj):
             for param in inspect.signature(obj.__init__).parameters.values():
-                param_annotation = param.annotation
-                if param_annotation != param.empty and param_annotation != None:
-                    setattr(obj, param.name, self.resolve(param_annotation))
+                if param.annotation != param.empty and param.annotation != Request:
+                    resolved_value = self.resolve(param.annotation)
+                    if resolved_value is not None:
+                        setattr(obj, param.name, resolved_value)
         elif callable(obj):
             signature = inspect.signature(obj)
             for param in signature.parameters.values():
-                param_annotation = param.annotation
-                if param_annotation != param.empty:
-                    param_value = self.resolve(param_annotation)
-                    obj.__dict__[param.name] = param_value
-
-
-container = DependencyContainer()
+                if param.annotation != param.empty and param.annotation != Request:
+                    param_value = self.resolve(param.annotation)
+                    if param_value is not None:
+                        obj.__dict__[param.name] = param_value
