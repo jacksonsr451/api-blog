@@ -5,4 +5,4 @@ from interfaces.interfaces.abstract_controller_interface import (
 
 class PostControllerInterface(AbstractControllerInterface):
     def __init__(self, service):
-        super().__init__(service)
+        self._service = service

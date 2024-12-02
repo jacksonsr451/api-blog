@@ -16,15 +16,15 @@ class AbstractControllerInterface(ABC):
         pass
 
     @abstractmethod
-    async def put(self, request: type[Request], *args, **kargs) -> str:
+    async def put(self, id: str, request: type[Request], *args, **kargs) -> str:
         pass
 
     @abstractmethod
-    async def delete(self, request: type[Request], *args, **kargs) -> str:
+    async def delete(self, id: str, *args, **kargs) -> str:
         pass
 
     @abstractmethod
-    async def show(self, request: type[Request], *args, **kargs) -> BaseModel:
+    async def show(self, id: str, request: type[Request], *args, **kargs) -> BaseModel:
         pass
 
     @abstractmethod
