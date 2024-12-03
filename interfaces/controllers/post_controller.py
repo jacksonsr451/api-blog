@@ -14,22 +14,22 @@ class PostController(PostControllerInterface):
 
     async def post(self, request: type[PostDTO], *args, **kargs) -> dict:
         try:
-            self._service.create_a_new_post(request)
+            await self._service.create_a_new_post(request)
             await self._service.execute()
-            logger.info("Succefule to create a new post!")
-            return dict(message="Succefule to create a new post!", status=200)
+            logger.info("Successful to create a new post!")
+            return dict(message="Successful to create a new post!", status=200)
         except Exception as error:
             logger.error(f"Error to create a post: {error}")
             return dict(detail="Error to create a new post!", status=400)
 
     async def put(self, id: str, request: type[PostDTO], *args, **kargs) -> dict:
         try:
-            self._service.update_a_post(id)
-            self._service.set_post_data(request)
+            await self._service.set_post_data(request)
+            await self._service.update_a_post(id)
             await self._service.execute()
-            logger.info(f"Updated massege succefuly to post by id: {id}")
+            logger.info(f"Updated message successfully to post by id: {id}")
             return dict(
-                message=f"Updated massege succefuly to post by id: {id}", status=200
+                message=f"Updated message successfully to post by id: {id}", status=200
             )
         except Exception as error:
             logger.error(f"Error to update a post: {error}")
@@ -37,25 +37,26 @@ class PostController(PostControllerInterface):
 
     async def delete(self, id: str, *args, **kargs) -> dict:
         try:
-            self._service.delete(id)
+            await self._service.delete(id)
             await self._service.execute()
+            return dict(message="Post deleted successfully", status=200)
         except Exception as error:
             logger.error(f"Error to delete a post: {error}")
-            return dict(detail="Error to delete a new post!", status=400)
+            return dict(detail="Error to delete a post!", status=400)
 
     async def show(self, id: str, request: type[PostDTO], *args, **kargs) -> PostDTO:
         try:
-            self._service.view(id)
+            await self._service.view(id)
             return dict(data=await self._service.execute(), status=200)
         except Exception as error:
             logger.error(f"Error to show a post with id: {id}, error: {error}")
             return dict(
-                detail="Error to show a post with id: {id}, error: {error}", status=400
+                detail=f"Error to show a post with id: {id}, error: {error}", status=400
             )
 
     async def view(self, request: type[PostDTO], *args, **kargs) -> List[PostDTO]:
         try:
-            self._service.list()
+            await self._service.list()
             return dict(data=await self._service.execute(), status=200)
         except Exception as error:
             logger.error(f"Error to list posts: {error}")
