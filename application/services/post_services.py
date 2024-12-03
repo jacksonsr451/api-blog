@@ -2,14 +2,14 @@ from typing import Optional
 
 from application.dtos.author_dto import AuthorDTO
 from application.dtos.post_dto import PostDTO
-from application.interfaces.base_service_interface import BaseServiceInterface
 from application.interfaces.post_repository_interface import PostRepositoryInterface
+from application.interfaces.post_service_interface import PostServiceIniterface
 from domain.src.post_entity import PostEntity
 from infrastructure.models.author_model import AuthorModel
 from infrastructure.models.post_model import PostModel
 
 
-class PostServices(BaseServiceInterface):
+class PostServices(PostServiceIniterface):
     def __init__(self, repository: PostRepositoryInterface):
         self._repository = repository
         self._post_entity: Optional[PostEntity] = None
