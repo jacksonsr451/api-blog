@@ -12,7 +12,6 @@ class Settings:
     APP_NAME: str = config("APP_NAME", default="my_app", cast=str)
     API_KEY: str = config("API_KEY", default="your-api-key", cast=str)
     REDIS_URL: str = config("REDIS_URL", default="redis://localhost:6379", cast=str)
-    KEYCLOAK_URL: str = config("KEYCLOAK_URL", default="keycloak-url", cast=str)
     KEYCLOAK_JWK_URI: str = config("KEYCLOAK_JWK_URI", default="keycloak-jwk", cast=str)
     POSTGRES_URL: str = config("POSTGRES_URL", default="sqlite:///./test.db", cast=str)
 
