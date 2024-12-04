@@ -12,15 +12,15 @@ class AuthorEntity:
     def __init__(
         self,
         id: Optional[str] = None,
-        firstname: str = '',
-        lastname: str = '',
+        firstname: str = "",
+        lastname: str = "",
         description: Optional[str] = None,
         resume: Optional[str] = None,
     ):
         if not firstname:
-            raise ValueError('Firstname is required.')
+            raise ValueError("Firstname is required.")
         if not lastname:
-            raise ValueError('Lastname is required.')
+            raise ValueError("Lastname is required.")
 
         self._id = id if id else str(uuid4())
         self._firstname = firstname
@@ -34,11 +34,11 @@ class AuthorEntity:
         lastname: str,
         description: Optional[str] = None,
         resume: Optional[str] = None,
-    ) -> 'AuthorEntity':
+    ) -> "AuthorEntity":
         if not firstname:
-            raise ValueError('Firstname is required.')
+            raise ValueError("Firstname is required.")
         if not lastname:
-            raise ValueError('Lastname is required.')
+            raise ValueError("Lastname is required.")
 
         self._firstname = firstname
         self._lastname = lastname
@@ -67,4 +67,4 @@ class AuthorEntity:
         return self._resume
 
     def __repr__(self) -> str:
-        return f'<AuthorEntity(id={self._id}, name={self._firstname} {self._lastname})>'
+        return f"<AuthorEntity(id={self._id}, name={self._firstname} {self._lastname})>"
