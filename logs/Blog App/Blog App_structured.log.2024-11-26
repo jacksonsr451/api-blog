@@ -1,6 +1,0 @@
-{"asctime": "2024-11-26 19:53:54,106", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}
-{"asctime": "2024-11-26 19:53:54,984", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}
-{"asctime": "2024-11-26 20:02:01,979", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}
-{"asctime": "2024-11-26 20:03:23,795", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}
-{"asctime": "2024-11-26 20:12:50,782", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}
-{"asctime": "2024-11-26 20:12:51,750", "levelname": "INFO", "msg": "Logging configured successfully", "pathname": "/home/jacksonsr451/softwares/jacksonsr451/python/blog/api/api/config/logger_config.py", "lineno": 111}

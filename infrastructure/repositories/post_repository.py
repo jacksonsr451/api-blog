@@ -20,7 +20,7 @@ class PostRepository(PostRepositoryInterface):
         author_instance = AuthorModel(**data.author.model_dump())
 
         post_data = data.model_dump()
-        post_data.pop('author', None)
+        post_data.pop("author", None)
 
         instance = PostModel(**post_data, author=author_instance)
         self._session.add(instance)
@@ -31,4 +31,3 @@ class PostRepository(PostRepositoryInterface):
         except SQLAlchemyError as e:
             await self._session.rollback()
             raise e
-
